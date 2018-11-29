@@ -16,7 +16,7 @@ const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
       ) : (
         <Redirect
           to={{
-            pathname: '/signin',
+            pathname: '/',
             state: { from: props.location }
           }}
         />
@@ -31,15 +31,11 @@ const PublicRoutes = ({ history, isLoggedIn }) => {
         <Route
           exact
           path={'/'}
-          component={asyncComponent(() => import('./containers/Page/signin'))}
+          component={asyncComponent(() => import('./containers/Page/index'))}
         />
+
         <Route
-          exact
-          path={'/signin'}
-          component={asyncComponent(() => import('./containers/Page/signin'))}
-        />
-        <Route
-          path="/auth0loginCallback"
+          path="/callback"
           render={props => {
             Auth0.handleAuthentication(props);
           }}

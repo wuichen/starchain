@@ -40,6 +40,7 @@ class Auth0Helper {
       // alert(`Error: ${err.error}. Check the console for further details.`);
       history.replace('/');
     });
+    return null
   }
 
   setSession(authResult) {
