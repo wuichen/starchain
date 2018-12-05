@@ -1,8 +1,10 @@
 import { all, takeEvery, put, call, fork } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
 import actions from './actions';
+import userActions from '../user/actions';
 import { setToken, clearToken, getToken } from '../../helpers/utility';
 import AuthHelper from '../../helpers/authHelper';
+import Auth0 from "../../helpers/auth0";
 import notification from '../../components/notification';
 import axios from 'axios';
 
@@ -65,6 +67,8 @@ export function promiseTest() {
 export function* loginSuccess() {
   yield takeEvery(actions.LOGIN_SUCCESS, function*({ payload, history }) {
     yield setToken(payload.token);
+
+    yield put(userActions.getUser())
     // yield call(promiseTest)
     if (history) {
       history.push('/dashboard');
@@ -84,13 +88,15 @@ export function* logout() {
 }
 export function* checkAuthorization() {
   yield takeEvery(actions.CHECK_AUTHORIZATION, function*() {
+    // const authResult = yield call([Auth0, 'checkSession'])
+    // console.log(authResult)
     const { token } = AuthHelper.checkExpirity(getToken());
     if (token) {
       yield put({
         type: actions.LOGIN_SUCCESS,
         payload: { token },
-        token,
-        profile: 'Profile'
+        // token,
+        // profile: 'Profile'
       });
     }
   });

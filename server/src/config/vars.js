@@ -14,4 +14,7 @@ module.exports = {
       : process.env.MONGO_URI,
   },
   logs: process.env.NODE_ENV === 'production' ? 'combined' : 'dev',
+  auth0_domain: process.env.AUTH0_DOMAIN,
+  auth0_clientId: process.env.AUTH0_CLIENT_ID
+  auth0_clientSecret: process.env.AUTH0_CLIENT_SECRET
 };

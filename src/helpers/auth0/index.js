@@ -12,7 +12,7 @@ class Auth0Helper {
       redirectUrl: AUTH_CONFIG.callbackUrl,
       responseType: 'token id_token',
       params: {
-        scope: 'openid profile email'
+        scope: 'openid profile'
       }
     }
   });
@@ -55,6 +55,19 @@ class Auth0Helper {
     })
   }
 
+  getUserInfo() {
+    return new Promise((resolve, reject) => {
+      const accessToken = localStorage.getItem('access_token')
+      this.lock.getUserInfo(accessToken, (err, profile) => {
+        if (err) {
+          console.log(err)
+          reject(err)
+        }
+        resolve(profile)
+      })
+    })
+  }
+
   setSession(authResult) {
     if (authResult && authResult.accessToken && authResult.idToken) {
       // Set the time that the access token will expire at
@@ -62,7 +75,7 @@ class Auth0Helper {
       localStorage.setItem('access_token', authResult.accessToken);
       localStorage.setItem('id_token', authResult.idToken);
       localStorage.setItem('expires_at', expiresAt);
-      localStorage.setItem('profile', JSON.stringify(authResult))
+      // localStorage.setItem('profile', JSON.stringify(authResult))
       // navigate to the home route
       history.replace('/dashboard');
     }

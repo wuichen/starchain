@@ -25,7 +25,7 @@ const AUTH_CONFIG = {
 };
 
 const jwtConfig = {
-  fetchUrl: '/api/',
+  fetchUrl: '/v1/api',
   secretKey: 'secretKey',
 };
 

@@ -13,6 +13,7 @@ exports.load = async (req, res, next, id) => {
     req.locals = { user };
     return next();
   } catch (error) {
+    console.log(error)
     return errorHandler(error, req, res);
   }
 };
