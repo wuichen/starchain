@@ -12,7 +12,7 @@ class Auth0Helper {
       redirectUrl: AUTH_CONFIG.callbackUrl,
       responseType: 'token id_token',
       params: {
-        scope: 'openid'
+        scope: 'openid profile email'
       }
     }
   });
@@ -30,6 +30,7 @@ class Auth0Helper {
     this.lock.show();
   }
 
+  // TODO: need to make this a react component
   handleAuthentication() {
     // Add a callback for Lock's `authenticated` event
     this.lock.on('authenticated', this.setSession.bind(this));
@@ -40,7 +41,18 @@ class Auth0Helper {
       // alert(`Error: ${err.error}. Check the console for further details.`);
       history.replace('/');
     });
-    return null
+  }
+
+  checkSession() {
+    return new Promise(async (resolve, reject) => {
+      this.lock.checkSession({}, (err, authResult) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(authResult)
+        }
+      })
+    })
   }
 
   setSession(authResult) {
@@ -50,6 +62,7 @@ class Auth0Helper {
       localStorage.setItem('access_token', authResult.accessToken);
       localStorage.setItem('id_token', authResult.idToken);
       localStorage.setItem('expires_at', expiresAt);
+      localStorage.setItem('profile', JSON.stringify(authResult))
       // navigate to the home route
       history.replace('/dashboard');
     }

@@ -40,7 +40,7 @@ router
    * @apiError (Unauthorized 401)  Unauthorized  Only authenticated users can access the data
    * @apiError (Forbidden 403)     Forbidden     Only admins can access the data
    */
-  // .get(authorize(ADMIN), validate(listUsers), controller.list)
+  .get(authorize(ADMIN), validate(listUsers), controller.list)
   /**
    * @api {post} v1/users Create User
    * @apiDescription Create a new user
@@ -66,12 +66,11 @@ router
    * @apiError (Unauthorized 401)  Unauthorized     Only authenticated users can create the data
    * @apiError (Forbidden 403)     Forbidden        Only admins can create the data
    */
-  .post(validate(createUser), controller.create);
-  // .post(authorize(ADMIN), validate(createUser), controller.create);
+  .post(authorize(ADMIN), validate(createUser), controller.create);
 
 
-// router
-//   .route('/profile')
+router
+  .route('/profile')
   /**
    * @api {get} v1/users/profile User Profile
    * @apiDescription Get logged in user profile information
@@ -90,7 +89,7 @@ router
    *
    * @apiError (Unauthorized 401)  Unauthorized  Only authenticated Users can access the data
    */
-  // .get(authorize(), controller.loggedIn);
+  .get(authorize(), controller.loggedIn);
 
 
 router
@@ -115,9 +114,7 @@ router
    * @apiError (Forbidden 403)    Forbidden    Only user with same id or admins can access the data
    * @apiError (Not Found 404)    NotFound     User does not exist
    */
-  .get(controller.get)
-
-  // .get(authorize(LOGGED_USER), controller.get)
+  .get(authorize(LOGGED_USER), controller.get)
   /**
    * @api {put} v1/users/:id Replace User
    * @apiDescription Replace the whole user document with a new one
@@ -145,7 +142,7 @@ router
    * @apiError (Forbidden 403)    Forbidden    Only user with same id or admins can modify the data
    * @apiError (Not Found 404)    NotFound     User does not exist
    */
-  // .put(authorize(LOGGED_USER), validate(replaceUser), controller.replace)
+  .put(authorize(LOGGED_USER), validate(replaceUser), controller.replace)
   /**
    * @api {patch} v1/users/:id Update User
    * @apiDescription Update some fields of a user document
@@ -173,7 +170,7 @@ router
    * @apiError (Forbidden 403)    Forbidden    Only user with same id or admins can modify the data
    * @apiError (Not Found 404)    NotFound     User does not exist
    */
-  // .patch(authorize(LOGGED_USER), validate(updateUser), controller.update)
+  .patch(authorize(LOGGED_USER), validate(updateUser), controller.update)
   /**
    * @api {patch} v1/users/:id Delete User
    * @apiDescription Delete a user
@@ -190,7 +187,7 @@ router
    * @apiError (Forbidden 403)    Forbidden     Only user with same id or admins can delete the data
    * @apiError (Not Found 404)    NotFound      User does not exist
    */
-  // .delete(authorize(LOGGED_USER), controller.remove);
+  .delete(authorize(LOGGED_USER), controller.remove);
 
 
 module.exports = router;

@@ -4,9 +4,8 @@ import actions from './actions';
 import { setToken, clearToken, getToken } from '../../helpers/utility';
 import AuthHelper from '../../helpers/authHelper';
 import notification from '../../components/notification';
-import axios from 'axios';
 
-export function* loginRequest() {
+export function* getUserRequest() {
   yield takeEvery('LOGIN_REQUEST', function*({ payload }) {
     const { history, userInfo } = payload;
     const result = yield call(AuthHelper.login, userInfo);
@@ -24,55 +23,16 @@ export function* loginRequest() {
   });
 }
 
-export function promiseTest() {
-  // return new Promise((resolve, reject) => {
-  //   fetch('/v1/idp')
-  //   .then((resp) => resp.json()) // Transform the data into json
-  //   .then(function(data) {
-  //     console.log(data)
-  //     resolve(data)
-  //   })
-  // })
-  // 
-  return new Promise((resolve, reject) => {
-    axios({
-      method: 'POST',
-      url: '/v1/users',
-      data: {
-        email: 'ichenwerddu07@gmail.com',
-        ig: {
-          id: '1234'
-        },
-        id: '1234'
-      }
-    })
-    // fetch('/v1/users', {
-    //   method: 'POST',
-    //   headers: {
-    //     "Content-type": "application/x-www-form-urlencoded"
-    //   },
-    //   body: JSON.stringify({
-    //     email: 'ichenwu02@gmail.com'
-    //   })
-    // })
-    .then(function(data) {
-      console.log(data)
-      resolve(data)
-    })
-  })
-}
-
-export function* loginSuccess() {
+export function* getUserSuccess() {
   yield takeEvery(actions.LOGIN_SUCCESS, function*({ payload, history }) {
     yield setToken(payload.token);
-    // yield call(promiseTest)
     if (history) {
       history.push('/dashboard');
     }
   });
 }
 
-export function* loginError() {
+export function* getUserError() {
   yield takeEvery(actions.LOGIN_ERROR, function*() {});
 }
 

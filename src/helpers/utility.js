@@ -1,5 +1,5 @@
-export function clearToken() {
-  localStorage.removeItem('id_token');
+export function clearToken(token) {
+  localStorage.removeItem(token);
 }
 export function setToken(token) {
   localStorage.setItem('id_token', token);
@@ -10,7 +10,16 @@ export function getToken() {
     const idToken = localStorage.getItem('id_token');
     return idToken;
   } catch (err) {
-    clearToken();
+    clearToken('id_token');
+  }
+}
+
+export function getAccessToken() {
+  try {
+    const accessToken = localStorage.getItem('access_token');
+    return accessToken;
+  } catch (err) {
+    clearToken('access_token');
   }
 }
 

@@ -11,7 +11,7 @@ import Auth0 from "../../helpers/auth0";
 
 const { login } = authAction;
 
-export default class SignIn extends Component {
+export default class Index extends Component {
 
   componentDidMount() {
     Auth0.login();
