@@ -10,8 +10,10 @@ import IntlMessages from '../../components/utility/intlMessages';
 import SidebarWrapper from './sidebar.style';
 import appActions from '../../redux/app/actions';
 import Logo from '../../components/utility/logo';
+import StoresButtons from './storeButtons';
 import themes from '../../settings/themes';
 import { themeConfig } from '../../settings';
+import { Modal, Button } from 'antd';
 
 const SubMenu = Menu.SubMenu;
 const { Sider } = Layout;
@@ -35,6 +37,7 @@ class Sidebar extends Component {
     this.handleClick = this.handleClick.bind(this);
     this.onOpenChange = this.onOpenChange.bind(this);
   }
+
   handleClick(e) {
     this.props.changeCurrent([e.key]);
     if (this.props.app.view === 'MobileView') {
@@ -152,6 +155,7 @@ class Sidebar extends Component {
           style={styling}
         >
           <Logo collapsed={collapsed} />
+          <StoresButtons collapsed={collapsed} createStore={this.createStore} />
           <Scrollbars style={{ height: height - 70 }}>
             <Menu
               onClick={this.handleClick}

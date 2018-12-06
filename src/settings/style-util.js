@@ -12,7 +12,7 @@ export function transition(timing = 0.3) {
 }
 
 // Border Radius
-export function borderRadius(radius = 0) {
+export function borderRadius(radius = '3px') {
   return `
       -webkit-border-radius: ${radius};
       -moz-border-radius: ${radius};

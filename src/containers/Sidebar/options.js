@@ -10,4 +10,13 @@ const options = [
     leftIcon: 'ion-document',
   },
 ];
+
+
+  // "sidebar.products": "Products",
+  // "sidebar.dashboard": "Dashboard",
+  // "sidebar.orders": "Orders",
+  // "sidebar.upgrade": "Upgrade",
+  // "sidebar.shops": "Shops",
+  // "sidebar.buy": "Buy",
+  // "sidebar.links": "Links",
 export default options;

@@ -2,6 +2,15 @@
   "sidebar.email": "Email",
   "sidebar.authCheck": "Auth Check",
   "sidebar.ecommerce": "Ecommerce",
+
+  "sidebar.products": "Products",
+  "sidebar.dashboard": "Dashboard",
+  "sidebar.orders": "Orders",
+  "sidebar.upgrade": "Upgrade",
+  "sidebar.shops": "Shops",
+  "sidebar.buy": "Buy",
+  "sidebar.links": "Links",
+
   "sidebar.shop": "Shop",
   "sidebar.cart": "Cart",
   "sidebar.checkout": "Checkout",

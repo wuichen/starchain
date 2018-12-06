@@ -60,6 +60,8 @@ class TopbarUser extends Component {
   }
 }
 export default connect(
-  null,
+  state => ({
+    user: state.User.user
+  }),
   { logout }
 )(TopbarUser);

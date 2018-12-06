@@ -2,7 +2,7 @@ const express = require('express');
 const userRoutes = require('./user.route');
 const authRoutes = require('./auth.route');
 const ManagementClient = require('auth0').ManagementClient;
-const { auth0_domain, auth0_clientId, auth0_clientSecret } = require('./vars');
+const { auth0_domain, auth0_clientId, auth0_clientSecret } = require('../../../config/vars');
 
 const router = express.Router();
 

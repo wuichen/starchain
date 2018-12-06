@@ -70,7 +70,7 @@ const AppHolder = styled.div`
   }
 
   button {
-    border-radius: 0;
+    border-radius: 3px;
   }
 `;
 

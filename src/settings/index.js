@@ -3,9 +3,9 @@ export default {
   apiUrl: 'http://yoursite.com/api/',
 };
 const siteConfig = {
-  siteName: 'ISOMORPHIC',
+  siteName: 'Starchain',
   siteIcon: 'ion-flash',
-  footerText: 'Isomorphic ©2018 Created by RedQ, Inc',
+  footerText: 'Starchain created by IWU',
 };
 const themeConfig = {
   topbar: 'themedefault',

@@ -55,6 +55,19 @@ html a {
 }
 
 /********** Add Your Global RTL CSS Here **********/
+/* Antd carousel*/
+.ant-carousel .slick-slide {
+  text-align: center;
+  height: 160px;
+  line-height: 160px !important;
+  background: #364d79;
+  overflow: hidden;
+}
+
+.ant-carousel .slick-slide h3 {
+  color: #fff;
+}
+
 /* Popover */
 html[dir='rtl'] .ant-popover {
   text-align: right;
