@@ -29,7 +29,6 @@ export function* getUserRequest() {
           newUser
         }
       })
-      yield put(push('/dashboard'))
     } else {
       yield put({
         type: actions.GET_USER_ERROR
@@ -40,11 +39,13 @@ export function* getUserRequest() {
 
 export function* getUserSuccess() {
   yield takeEvery(actions.GET_USER_SUCCESS, function*({payload, history}) {
-    // if (payload.newUser) {
-    //   history.push('/setup')
-    // } else {
-    //   history.push('/dashboard')
-    // }
+    if (payload.newUser) {
+      yield put(push('/setup'))
+    } else {
+      // TODO: add check email verification case. 
+      yield put(push('/dashboard'))
+    }
+
   });
 }
 

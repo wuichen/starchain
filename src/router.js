@@ -40,6 +40,11 @@ const PublicRoutes = ({ history, isLoggedIn }) => {
           component={asyncComponent(() => import('./containers/Page/signin'))}
         />
         <Route
+          exact
+          path={'/setup'}
+          component={asyncComponent(() => import('./containers/Page/signin'))}
+        />
+        <Route
           path="/callback"
           component={asyncComponent(() => import('./containers/Page/auth0callback'))}
         />
