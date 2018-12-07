@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 // import { Link } from 'react-router-dom';
 import { siteConfig } from '../../settings';
-import { Modal, Button, Dropdown, Menu, Icon, message, Carousel } from 'antd';
+import { Modal, Button, Dropdown, Menu, Icon, message, Carousel, Form, Input, Checkbox} from 'antd';
 import { connect } from 'react-redux';
+const FormItem = Form.Item;
 
 class StoreButtons extends Component {
   constructor(props) {
@@ -14,8 +15,8 @@ class StoreButtons extends Component {
 
   state = { 
     showCreateStoreModal: false,
+    showNewUserModal: false,
     page: 0
-
   }
 
   handleMenuClick(e) {
@@ -30,18 +31,21 @@ class StoreButtons extends Component {
     });
   }
 
-  handleOk(e) {
-    this.slider.next()
-    // console.log(e);
-    // this.setState({
-    //   showCreateStoreModal: false,
-    // });
+  handleOk(type, e) {
+    if (type === 'newUser') {
+      this.newUserSlider.next()
+    } else {
+      this.createStoreSlider.next()
+    }
   }
 
-  handleCancel(e) {
-    console.log(e);
+  handleCancel(type, e) {
+    if (type === 'newUser') {
+
+    }
     this.setState({
       showCreateStoreModal: false,
+      showNewUserModal: false
     });
   }
 
@@ -77,17 +81,73 @@ class StoreButtons extends Component {
     )
   }
 
-  beforeChange(email, from, to) {
-    console.log(email, from , to)
+  beforeChange(type, from, to) {
+    console.log(type, from , to)
     if (to === 0) {
-      this.setState({
-        showCreateStoreModal: false
-      })
-    } else if (to === 1) {
-      if (!email) {
-        console.log('no email layer, this will be filled in email page(first time user), so click to submit email to db')
-        // submit Email to server
+      if (type === 'newUser') {
+        this.setState({
+          showNewUserModal: false
+        })
+      } else {
+        this.setState({
+          showCreateStoreModal: false
+        })
       }
+    }
+  }
+
+  submitEmail(email) {
+    console.log(email)
+  }
+
+  renderNewUserModal() {
+    return (
+      <Modal
+        title='Welcome to Starchain'
+        visible={this.state.showNewUserModal}
+        onOk={this.handleOk.bind(this, 'newUser')}
+        onCancel={this.handleCancel.bind(this, 'newUser')}
+        footer={null}
+        maskClosable={false}
+      >
+        <h3>
+          Please input your email:
+        </h3>
+        <WrappedRegistrationForm submitEmail={this.submitEmail} />
+      </Modal>
+    )
+  }
+  
+  renderCreateStoreModal() {
+    return (
+      <Modal
+        title='Create store'
+        visible={this.state.showCreateStoreModal}
+        onOk={this.handleOk.bind(this, 'createStore')}
+        onCancel={this.handleCancel.bind(this)}
+        okButtonProps={{ disabled: false }}
+        cancelButtonProps={{ disabled: true }}
+      >
+        <Carousel vertical ref={slider => (this.createStoreSlider = slider)} beforeChange={this.beforeChange.bind(this, 'createStore')}>
+          <div><h3>Create Store 1</h3></div>           
+          <div><h3>Create Store 2</h3></div>
+          <div><h3>Create Store 3</h3></div>
+          <div><h3>Create Store 4</h3></div>
+        </Carousel>
+      </Modal>
+    )
+  }
+
+  componentDidMount() {
+    const email = this.props.User && this.props.User.user && this.props.User.user.email  || null
+    if (!email) {
+      this.setState({
+        showNewUserModal: true
+      })
+    } else {
+      this.setState({
+        showNewUserModal: false
+      })
     }
   }
 
@@ -107,26 +167,74 @@ class StoreButtons extends Component {
           </div>
           )
         }
-
-        <Modal
-          title={!!email ? 'Create store' : 'Welcome to Starchain'}
-          visible={this.state.showCreateStoreModal}
-          onOk={this.handleOk.bind(this)}
-          onCancel={this.handleCancel.bind(this)}
-          okButtonProps={{ disabled: false }}
-          cancelButtonProps={{ disabled: true }}
-        >
-          <Carousel vertical ref={slider => (this.slider = slider)} beforeChange={this.beforeChange.bind(this, email)}>
-            {!email &&  (<div><h3>1</h3></div>)}            
-            <div><h3>2</h3></div>
-            <div><h3>3</h3></div>
-            <div><h3>4</h3></div>
-          </Carousel>
-        </Modal>
+        {this.renderNewUserModal()}
+        {this.renderCreateStoreModal()}
       </div>
     )
   };
 };
+
+class RegistrationForm extends React.Component {
+  handleSubmit = (e) => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        this.props.submitEmail(values.email)
+      }
+    });
+  }
+
+  render() {
+    const { getFieldDecorator } = this.props.form;
+    const formItemLayout = {
+      labelCol: {
+        xs: { span: 6 },
+        sm: { span: 18 },
+      },
+      wrapperCol: {
+        xs: { span: 6 },
+        sm: { span: 18 },
+      },
+    };
+    const tailFormItemLayout = {
+      wrapperCol: {
+        xs: {
+          span: 24,
+          offset: 0,
+        },
+        sm: {
+          span: 24,
+          offset: 0,
+        },
+      },
+    };
+    return (
+      <Form onSubmit={this.handleSubmit} className="login-form">
+        <FormItem
+          label="E-mail"
+        >
+          {getFieldDecorator('email', {
+            rules: [{
+              type: 'email', message: 'The input is not valid E-mail!',
+            }, {
+              required: true, message: 'Please input your E-mail!',
+            }],
+          })(
+            <Input />
+          )}
+        </FormItem>
+        <FormItem >
+          <Button type="primary" htmlType="submit" className="login-form-button">
+            Start
+          </Button>
+        </FormItem>
+      </Form>
+    );
+  }
+}
+
+
+const WrappedRegistrationForm = Form.create()(RegistrationForm);
 
 
 export default connect(

@@ -29,6 +29,7 @@ export function* getUserRequest() {
           newUser
         }
       })
+      yield put(push('/dashboard'))
     } else {
       yield put({
         type: actions.GET_USER_ERROR

@@ -70,9 +70,6 @@ export function* loginSuccess() {
 
     yield put(userActions.getUser())
     // yield call(promiseTest)
-    if (history) {
-      history.push('/dashboard');
-    }
   });
 }
 

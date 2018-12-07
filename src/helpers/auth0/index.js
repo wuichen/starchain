@@ -39,7 +39,7 @@ class Auth0Helper {
       console.log(err);
       notification('error', `Error: ${err.error}. Check the console for further details.`);
       // alert(`Error: ${err.error}. Check the console for further details.`);
-      history.replace('/');
+      history.replace('/signin');
     });
   }
 
@@ -77,7 +77,7 @@ class Auth0Helper {
       localStorage.setItem('expires_at', expiresAt);
       // localStorage.setItem('profile', JSON.stringify(authResult))
       // navigate to the home route
-      history.replace('/dashboard');
+      // history.replace('/dashboard');
     }
   }
 

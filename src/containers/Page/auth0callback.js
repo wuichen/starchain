@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import authAction from '../../redux/auth/actions';
+import authAction from '../../redux/auth/actions';
 import Auth0 from '../../helpers/auth0'
-
-// const { logout } = authAction;
+const { checkAuthorization } = authAction;
 
 export class Auth0Callback extends Component {
   componentDidMount() {
     Auth0.handleAuthentication()
+    this.props.checkAuthorization()
   }
   render() {
     return (
@@ -19,6 +19,6 @@ export class Auth0Callback extends Component {
 export default connect(
   state => ({
     auth: state.Auth,
-  })
-  // { logout }
+  }),
+  { checkAuthorization }
 )(Auth0Callback);
