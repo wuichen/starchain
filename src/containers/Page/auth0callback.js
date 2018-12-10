@@ -77,21 +77,20 @@ class Auth0Callback extends Component {
   // }
 
   componentDidMount() {
-    console.log(this.props.history)
-    if (/access_token|id_token|error/.test(this.props.history.location.hash)) {
-      this.props.handleAuthentication((err, result) => {
-        if (err) {
-          console.log(err)
-          this.props.history.push('/');
-          return;
-        }
-        console.log('callbbackksed!!')
-          this.props.history.push('/dashboard')
-          return;
-      });
-    } else {
-      this.props.history.push('/');
-    }
+    this.props.handleAuthentication()
+    // if (/access_token|id_token|error/.test(this.props.history.location.hash)) {
+    //   this.props.handleAuthentication((err, result) => {
+    //     if (err) {
+    //       console.log(err)
+    //       this.props.history.push('/');
+    //       return;
+    //     }
+    //     this.props.history.push('/dashboard')
+    //     return;
+    //   });
+    // } else {
+    //   this.props.history.push('/');
+    // }
   }
 
   render() {

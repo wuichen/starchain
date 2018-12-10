@@ -16,7 +16,7 @@ const actions = {
   }),
   handleAuthentication: (callback) => ({
     type: actions.LOGIN_REQUEST,
-    callback
+    // callback
   })
 };
 export default actions;

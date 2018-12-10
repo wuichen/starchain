@@ -82,8 +82,10 @@ export function* loginSuccess() {
 
 export function* loginError() {
   yield takeEvery(actions.LOGIN_ERROR, function*() {
-    // clearToken();
-    // yield put(push('/'));
+    clearToken();
+    Auth0.signout()
+    yield put(push('/'));
+    yield call([Auth0, 'signout'])
   });
 }
 
@@ -95,8 +97,6 @@ export function* logout() {
 }
 export function* checkAuthorization() {
   yield takeEvery(actions.CHECK_AUTHORIZATION, function*() {
-    // const authResult = yield call([Auth0, 'checkSession'])
-    // console.log(authResult)
     const { token } = AuthHelper.checkExpirity(getToken());
     if (token) {
       yield put({
@@ -110,14 +110,16 @@ export function* checkAuthorization() {
 }
 
 export function* handleAuthentication() {
-  yield takeEvery(actions.LOGIN_REQUEST, function*({callback}) {
+  yield takeEvery(actions.LOGIN_REQUEST, function*({}) {
     try {
       const authResult = yield call([Auth0, 'handleAuthentication'])
       console.log(authResult)
-      // yield put({
-      //   type: actions.LOGIN_SUCCESS
-      // })
-      callback()
+      yield put({
+        type: actions.LOGIN_SUCCESS,
+        payload: {
+          token: authResult.idToken
+        }
+      })
 
     } catch (err) {
       console.log(err)
