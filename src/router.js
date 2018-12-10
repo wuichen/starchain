@@ -41,8 +41,8 @@ const PublicRoutes = ({ history, isLoggedIn }) => {
         />
         <Route
           exact
-          path={'/setup'}
-          component={asyncComponent(() => import('./containers/Page/signin'))}
+          path={'/register'}
+          component={asyncComponent(() => import('./containers/Page/register'))}
         />
         <Route
           path="/callback"

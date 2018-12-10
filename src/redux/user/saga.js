@@ -13,13 +13,16 @@ export function* getUserRequest() {
     let newUser = false
     try {
       ig_user = yield call([Auth0, 'getUserInfo'])
-      db_user = yield call(api.get, '/users/12345')
+      const sub = ig_user.sub
+      db_user = yield call(api.get, '/users/' + sub)
     } catch (err) {
+
+      // TODO: check err is 404 not found
       if (ig_user && !db_user) {
         newUser = true
       }
     }
-    const user = Object.assign({}, ig_user, db_user)
+    const user = db_user || ig_user
 
     if (user) {
       yield put({
@@ -39,12 +42,6 @@ export function* getUserRequest() {
 
 export function* getUserSuccess() {
   yield takeEvery(actions.GET_USER_SUCCESS, function*({payload, history}) {
-    if (payload.newUser) {
-      yield put(push('/setup'))
-    } else {
-      // TODO: add check email verification case. 
-      yield put(push('/dashboard'))
-    }
 
   });
 }
@@ -52,6 +49,36 @@ export function* getUserSuccess() {
 export function* getUserError() {
   yield takeEvery(actions.GET_USER_ERROR, function*() {});
 }
+
+export function* updateUserRequest() {
+  yield takeEvery(actions.UPDATE_USER_REQUEST, function*() {
+    let db_user
+    try {
+      db_user = yield call(api.update, '/users/12345')
+      yield put({
+        type: actions.UPDATE_USER_SUCCESS,
+        payload: {
+        }
+      })
+    } catch (err) {
+      // TODO: check err is 404 nod found
+      yield put({
+        type: actions.GET_USER_ERROR
+      })
+    }
+  });
+}
+
+
+export function* updateUserSuccess() {
+  yield takeEvery(actions.GET_USER_SUCCESS, function*({payload, history}) {
+  });
+}
+
+export function* updateUserError() {
+  yield takeEvery(actions.GET_USER_ERROR, function*() {});
+}
+
 
 export default function* rootSaga() {
   yield all([

@@ -46,6 +46,8 @@ class Auth0Helper {
   checkSession() {
     return new Promise(async (resolve, reject) => {
       this.lock.checkSession({}, (err, authResult) => {
+        console.log(err)
+        console.log(authResult)
         if (err) {
           reject(err)
         } else {

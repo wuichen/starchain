@@ -69,6 +69,13 @@ export function* loginSuccess() {
     yield setToken(payload.token);
 
     yield put(userActions.getUser())
+
+    // if (payload.newUser) {
+    //   yield put(push('/register'))
+    // } else {
+    //   // TODO: add check email verification case. 
+    //   yield put(push('/dashboard'))
+    // }
     // yield call(promiseTest)
   });
 }
@@ -85,7 +92,7 @@ export function* logout() {
 }
 export function* checkAuthorization() {
   yield takeEvery(actions.CHECK_AUTHORIZATION, function*() {
-    // const authResult = yield call([Auth0, 'checkSession'])
+    const authResult = yield call([Auth0, 'checkSession'])
     // console.log(authResult)
     const { token } = AuthHelper.checkExpirity(getToken());
     if (token) {
