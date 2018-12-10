@@ -7,7 +7,7 @@ import App from './containers/App/App';
 // import Auth0Callback from './containers/Page/auth0callback';
 import asyncComponent from './helpers/AsyncFunc';
 import Auth0 from "./helpers/auth0";
-
+import Auth0CallBack from  './containers/Page/auth0callback'
 const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
   <Route
     {...rest}
@@ -46,7 +46,7 @@ const PublicRoutes = ({ history, isLoggedIn }) => {
         />
         <Route
           path="/callback"
-          component={asyncComponent(() => import('./containers/Page/auth0callback'))}
+          component={Auth0CallBack}
         />
         <RestrictedRoute
           path="/dashboard"

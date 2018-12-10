@@ -23,6 +23,11 @@ class SignIn extends Component {
       this.setState({ redirectToReferrer: true });
     }
   }
+
+  login() {
+    Auth0.signin()
+  }
+
   handleLogin = () => {
     const { login, history } = this.props;
     const userInfo = {
@@ -32,7 +37,7 @@ class SignIn extends Component {
     login({ history, userInfo });
   };
   componentDidMount() {
-    Auth0.login();
+    // Auth0.login();
   }
   render() {
     const from = { pathname: '/dashboard' };
@@ -82,6 +87,9 @@ class SignIn extends Component {
               <p className="isoHelperText">
                 <IntlMessages id="page.signInPreview" />
               </p>
+              <Button type="primary" onClick={this.login}>
+                Login auth0
+              </Button>
             </div>
           </div>
         </div>

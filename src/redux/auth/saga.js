@@ -8,23 +8,23 @@ import Auth0 from "../../helpers/auth0";
 import notification from '../../components/notification';
 import axios from 'axios';
 
-export function* loginRequest() {
-  yield takeEvery('LOGIN_REQUEST', function*({ payload }) {
-    const { history, userInfo } = payload;
-    const result = yield call(AuthHelper.login, userInfo);
-    if (result.token) {
-      yield put({
-        type: actions.LOGIN_SUCCESS,
-        payload: result,
-        token: result.token,
-        history
-      });
-    } else {
-      notification('error', result.error || result);
-      yield put({ type: actions.LOGIN_ERROR });
-    }
-  });
-}
+// export function* loginRequest() {
+//   yield takeEvery('LOGIN_REQUEST', function*({ payload }) {
+//     const { history, userInfo } = payload;
+//     const result = yield call(AuthHelper.login, userInfo);
+//     if (result.token) {
+//       yield put({
+//         type: actions.LOGIN_SUCCESS,
+//         payload: result,
+//         token: result.token,
+//         history
+//       });
+//     } else {
+//       notification('error', result.error || result);
+//       yield put({ type: actions.LOGIN_ERROR });
+//     }
+//   });
+// }
 
 export function promiseTest() {
   // return new Promise((resolve, reject) => {
@@ -68,7 +68,7 @@ export function* loginSuccess() {
   yield takeEvery(actions.LOGIN_SUCCESS, function*({ payload, history }) {
     yield setToken(payload.token);
 
-    yield put(userActions.getUser())
+    // yield put(userActions.getUser())
 
     // if (payload.newUser) {
     //   yield put(push('/register'))
@@ -81,7 +81,10 @@ export function* loginSuccess() {
 }
 
 export function* loginError() {
-  yield takeEvery(actions.LOGIN_ERROR, function*() {});
+  yield takeEvery(actions.LOGIN_ERROR, function*() {
+    // clearToken();
+    // yield put(push('/'));
+  });
 }
 
 export function* logout() {
@@ -92,7 +95,7 @@ export function* logout() {
 }
 export function* checkAuthorization() {
   yield takeEvery(actions.CHECK_AUTHORIZATION, function*() {
-    const authResult = yield call([Auth0, 'checkSession'])
+    // const authResult = yield call([Auth0, 'checkSession'])
     // console.log(authResult)
     const { token } = AuthHelper.checkExpirity(getToken());
     if (token) {
@@ -105,10 +108,43 @@ export function* checkAuthorization() {
     }
   });
 }
+
+export function* handleAuthentication() {
+  yield takeEvery(actions.LOGIN_REQUEST, function*({callback}) {
+    try {
+      const authResult = yield call([Auth0, 'handleAuthentication'])
+      console.log(authResult)
+      // yield put({
+      //   type: actions.LOGIN_SUCCESS
+      // })
+      callback()
+
+    } catch (err) {
+      console.log(err)
+      yield put({ type: actions.LOGIN_ERROR });
+    }
+
+
+
+
+    // const authResult = yield call([Auth0, 'checkSession'])
+    // // console.log(authResult)
+    // const { token } = AuthHelper.checkExpirity(getToken());
+    // if (token) {
+    //   yield put({
+    //     type: actions.LOGIN_SUCCESS,
+    //     payload: { token },
+    //     // token,
+    //     // profile: 'Profile'
+    //   });
+    // }
+  });
+}
+
 export default function* rootSaga() {
   yield all([
     fork(checkAuthorization),
-    fork(loginRequest),
+    fork(handleAuthentication),
     fork(loginSuccess),
     fork(loginError),
     fork(logout)
