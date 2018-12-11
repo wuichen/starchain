@@ -71,15 +71,6 @@ export function promiseTest() {
 
 export function* loginSuccess() {
   yield takeEvery(actions.LOGIN_SUCCESS, function*({ payload, history }) {
-    // const auth0_user = yield call(promiseTest)
-    // console.log('yoo', auth0_user)
-
-
-    // const auth0_user = yield call([Auth0, 'getUserInfo'])
-    // console.log('yoo', auth0_user)
-
-
-
     try {
       yield put(userActions.getUser())
       yield take(userActions.GET_USER_SUCCESS)
@@ -87,7 +78,11 @@ export function* loginSuccess() {
       console.log(user)
       if (user) {
         if (user.email_verified) {
-          yield put(push('/dashboard'))
+          if (user.stores && user.stores[0]) {
+            yield put(push('/dashboard'))
+          } else {
+            yield put(push('/dashboard/createStore'))
+          }
         } else {
           // yield call([Auth0, 'logout'])
           yield put(push('/verifyEmail'))
@@ -95,22 +90,12 @@ export function* loginSuccess() {
       } else {
         throw new Error('cant find user');
       }
-
     } catch (err) {
       notification('error', err || 'error');
       yield put({
         type: actions.LOGIN_ERROR,
       })
     }
-    // yield put(userActions.getUser())
-
-    // if (payload.newUser) {
-    //   yield put(push('/register'))
-    // } else {
-    //   // TODO: add check email verification case. 
-    //   yield put(push('/dashboard'))
-    // }
-    // yield call(promiseTest)
   });
 }
 
@@ -154,21 +139,6 @@ export function* handleAuthentication() {
       console.log(err)
       yield put({ type: actions.LOGIN_ERROR });
     }
-
-
-
-
-    // const authResult = yield call([Auth0, 'checkSession'])
-    // // console.log(authResult)
-    // const { token } = AuthHelper.checkExpirity(getToken());
-    // if (token) {
-    //   yield put({
-    //     type: actions.LOGIN_SUCCESS,
-    //     payload: { token },
-    //     // token,
-    //     // profile: 'Profile'
-    //   });
-    // }
   });
 }
 

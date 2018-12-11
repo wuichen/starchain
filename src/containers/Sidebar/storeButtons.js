@@ -140,15 +140,15 @@ class StoreButtons extends Component {
 
   componentDidMount() {
     const email = this.props.User && this.props.User.user && this.props.User.user.email  || null
-    if (!email) {
-      this.setState({
-        showNewUserModal: true
-      })
-    } else {
-      this.setState({
-        showNewUserModal: false
-      })
-    }
+    // if (!email) {
+    //   this.setState({
+    //     showNewUserModal: true
+    //   })
+    // } else {
+    //   this.setState({
+    //     showNewUserModal: false
+    //   })
+    // }
   }
 
   render() {
