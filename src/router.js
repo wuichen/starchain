@@ -45,6 +45,11 @@ const PublicRoutes = ({ history, isLoggedIn }) => {
           component={asyncComponent(() => import('./containers/Page/register'))}
         />
         <Route
+          exact
+          path={'/verifyEmail'}
+          component={asyncComponent(() => import('./containers/Page/verifyEmail'))}
+        />
+        <Route
           path="/callback"
           component={Auth0CallBack}
         />

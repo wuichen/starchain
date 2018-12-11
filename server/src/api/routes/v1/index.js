@@ -18,7 +18,7 @@ router.get('/idp', (req, res) => {
 	  clientSecret: auth0_clientSecret,
 	  scope: 'read:users read:user_idp_tokens'
 	});
-	auth0.getUser({id:'instagram|1446451145'}, (err, user) => {
+	auth0.getUser({id:'auth0|5c0cb91439737b4049f9f276'}, (err, user) => {
 		if (err) {
 			console.log(err)
 		} else {

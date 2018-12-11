@@ -9,30 +9,17 @@ import api from '../../helpers/api';
 
 export function* getUserRequest() {
   yield takeEvery(actions.GET_USER_REQUEST, function*() {
-    let ig_user, db_user
-    let newUser = false
     try {
-      ig_user = yield call([Auth0, 'getUserInfo'])
-      const sub = ig_user.sub
-      db_user = yield call(api.get, '/users/' + sub)
-    } catch (err) {
-
-      // TODO: check err is 404 not found
-      if (ig_user && !db_user) {
-        newUser = true
-      }
-    }
-    const user = db_user || ig_user
-
-    if (user) {
+      const auth0_user = yield call([Auth0, 'getUserInfo'])
+      const sub = auth0_user.sub
+      const response = yield call(api.get, '/users/' + sub)
       yield put({
         type: actions.GET_USER_SUCCESS,
         payload: {
-          user,
-          newUser
+          user: response.data
         }
       })
-    } else {
+    } catch (err) {
       yield put({
         type: actions.GET_USER_ERROR
       })

@@ -1,8 +1,8 @@
-import { all, takeEvery, put, call, fork } from 'redux-saga/effects';
+import { all, takeEvery, put, call, fork, select, take } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
 import actions from './actions';
 import userActions from '../user/actions';
-import { setToken, clearToken, getToken } from '../../helpers/utility';
+import { setToken, clearToken, getToken, getAccessToken } from '../../helpers/utility';
 import AuthHelper from '../../helpers/authHelper';
 import Auth0 from "../../helpers/auth0";
 import notification from '../../components/notification';
@@ -38,16 +38,22 @@ export function promiseTest() {
   // 
   return new Promise((resolve, reject) => {
     axios({
-      method: 'POST',
-      url: '/v1/users',
-      data: {
-        email: 'ichenwerddu07@gmail.com',
-        ig: {
-          id: '1234'
-        },
-        id: '1234'
-      }
+      method: 'GET',
+      url: '/v1/api/users/auth0|5c0cb91439737b4049f9f276',
     })
+
+
+    // axios({
+    //   method: 'POST',
+    //   url: '/v1/api/users',
+    //   data: {
+    //     email: 'ichenwdeweu07@gmail.com',
+    //     ig: {
+    //       id: '1234'
+    //     },
+    //     _id: 'auth0|5c0cb91439737b4049f9f276'
+    //   }
+    // })
     // fetch('/v1/users', {
     //   method: 'POST',
     //   headers: {
@@ -58,7 +64,6 @@ export function promiseTest() {
     //   })
     // })
     .then(function(data) {
-      console.log(data)
       resolve(data)
     })
   })
@@ -66,8 +71,37 @@ export function promiseTest() {
 
 export function* loginSuccess() {
   yield takeEvery(actions.LOGIN_SUCCESS, function*({ payload, history }) {
-    yield setToken(payload.token);
+    // const auth0_user = yield call(promiseTest)
+    // console.log('yoo', auth0_user)
 
+
+    // const auth0_user = yield call([Auth0, 'getUserInfo'])
+    // console.log('yoo', auth0_user)
+
+
+
+    try {
+      yield put(userActions.getUser())
+      yield take(userActions.GET_USER_SUCCESS)
+      const user = yield select(state => state.User.user)
+      console.log(user)
+      if (user) {
+        if (user.email_verified) {
+          yield put(push('/dashboard'))
+        } else {
+          // yield call([Auth0, 'logout'])
+          yield put(push('/verifyEmail'))
+        }
+      } else {
+        throw new Error('cant find user');
+      }
+
+    } catch (err) {
+      notification('error', err || 'error');
+      yield put({
+        type: actions.LOGIN_ERROR,
+      })
+    }
     // yield put(userActions.getUser())
 
     // if (payload.newUser) {
@@ -92,18 +126,17 @@ export function* loginError() {
 export function* logout() {
   yield takeEvery(actions.LOGOUT, function*() {
     clearToken();
+    yield call([Auth0, 'logout'])
     yield put(push('/'));
   });
 }
 export function* checkAuthorization() {
   yield takeEvery(actions.CHECK_AUTHORIZATION, function*() {
+    const access_token = getAccessToken();
     const { token } = AuthHelper.checkExpirity(getToken());
-    if (token) {
+    if (token && access_token) {
       yield put({
         type: actions.LOGIN_SUCCESS,
-        payload: { token },
-        // token,
-        // profile: 'Profile'
       });
     }
   });
@@ -113,12 +146,8 @@ export function* handleAuthentication() {
   yield takeEvery(actions.LOGIN_REQUEST, function*({}) {
     try {
       const authResult = yield call([Auth0, 'handleAuthentication'])
-      console.log(authResult)
       yield put({
-        type: actions.LOGIN_SUCCESS,
-        payload: {
-          token: authResult.idToken
-        }
+        type: actions.LOGIN_SUCCESS
       })
 
     } catch (err) {

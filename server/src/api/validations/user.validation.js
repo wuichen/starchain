@@ -19,7 +19,7 @@ module.exports = {
     body: {
       email: Joi.string().email().required(),
       ig: Joi.object().required(),
-      id: Joi.string().required(),
+      _id: Joi.string().required(),
       
     },
   },

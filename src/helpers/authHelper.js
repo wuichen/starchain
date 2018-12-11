@@ -21,6 +21,22 @@ class AuthHelper {
       }))
       .catch(error => ({ error: JSON.stringify(error) }));
   }
+  decodeToken = token => {
+    if (!token) {
+      return {
+        error: 'not matched',
+      };
+    }
+    try {
+      const profile = jwtDecode(token);
+      return {
+        ...profile
+      };
+    } catch (e) {
+      console.log(e);
+      return { error: 'Server Error' };
+    }
+  };
   checkExpirity = token => {
     if (!token) {
       return {

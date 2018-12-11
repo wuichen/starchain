@@ -29,14 +29,11 @@ const userSchema = new mongoose.Schema({
   ig: {
     id: {
       type: String,
-      required: true
     }
   },
-  id: {
+  _id: {
     type: String,
-    maxlength: 128,
-    index: true,
-    trim: true,
+    required: true
   },
   // role: {
   //   type: String,
@@ -115,9 +112,9 @@ userSchema.statics = {
     try {
       let user;
 
-      if (mongoose.Types.ObjectId.isValid(id)) {
-        user = await this.findById(id).exec();
-      }
+      // if (mongoose.Types.ObjectId.isValid(id)) {
+      user = await this.findById(id).exec();
+      // }
       if (user) {
         return user;
       }

@@ -2,6 +2,8 @@ const httpStatus = require('http-status');
 const { omit } = require('lodash');
 const User = require('../models/user.model');
 const { handler: errorHandler } = require('../middlewares/error');
+const ManagementClient = require('auth0').ManagementClient;
+const { auth0_domain, auth0_clientId, auth0_clientSecret } = require('../../config/vars');
 
 /**
  * Load user and append to req.
@@ -9,7 +11,26 @@ const { handler: errorHandler } = require('../middlewares/error');
  */
 exports.load = async (req, res, next, id) => {
   try {
-    const user = await User.get(id);
+    const auth0 = new ManagementClient({
+      domain: auth0_domain,
+      clientId: auth0_clientId,
+      clientSecret: auth0_clientSecret,
+      scope: 'read:users read:user_idp_tokens'
+    });
+
+    const auth0_user = await auth0.getUser({id})
+    let db_user = null
+    if (auth0_user.email_verified) {
+      db_user = await User.findById(id).exec();
+      if (!db_user) {
+        db_user = await User.create({
+          _id: auth0_user.user_id,
+          email: auth0_user.email
+        })
+      }
+      db_user = db_user.toObject()
+    }
+    const user = Object.assign({}, auth0_user, db_user)
     req.locals = { user };
     return next();
   } catch (error) {
@@ -22,7 +43,7 @@ exports.load = async (req, res, next, id) => {
  * Get user
  * @public
  */
-exports.get = (req, res) => res.json(req.locals.user.transform());
+exports.get = (req, res) => res.json(req.locals.user);
 
 /**
  * Get logged in user info
