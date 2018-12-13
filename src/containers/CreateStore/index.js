@@ -16,7 +16,7 @@ import SocialLink from './socialLink';
 import storeAction from '../../redux/store/actions';
 import productAction from '../../redux/product/actions';
 const {fetchProducts} = productAction
-const {submitStoreName, linkSocial} = storeAction
+const {submitStoreName, submitStore, linkSocial, submitInterests} = storeAction
 const Step = Steps.Step;
 
 class CreateStore extends Component {
@@ -55,8 +55,8 @@ class CreateStore extends Component {
     this.next()
   }
 
-  submitInterest(interests) {
-    this.props.submitInterest(interests)
+  submitInterests(interests) {
+    this.props.submitInterests(interests)
     this.next()
   }
 
@@ -81,11 +81,15 @@ class CreateStore extends Component {
       description: 'setup the storename for your store'
     }, {
       title: 'Products & Categories',
-      content: <SalesPanel submitInterest={this.submitInterest} />,
+      content: <SalesPanel submitInterests={this.submitInterests.bind(this)} />,
       description: 'pick the categories and products for your store'
     }, {
       title: 'Done',
-      content: 'Last-content',
+      content: (
+        <div>
+          <Button onClick={this.props.submitStore}>Submit</Button>
+        </div>
+      ),
       description: 'check your store'
     }];
     const { current } = this.state;
@@ -147,7 +151,9 @@ export default connect(
   }),
   { submitStoreName,
     linkSocial,
-    fetchProducts
+    submitInterests,
+    fetchProducts,
+    submitStore
    }
 )(CreateStore);
 

@@ -16,13 +16,15 @@ export default class SalesPanel extends Component {
   }
 
   selectInterest(value) {
+    const newInterests = this.state.interests
+    console.log(newInterests)
     this.setState({
-      interests: this.state.interests.push(value)
+      interests: newInterests
     })
   }
 
-  submitInterest() {
-    this.props.submitInterest(this.state.interests)
+  submitInterests() {
+    this.props.submitInterests(this.state.interests)
   }
 
   render() {
@@ -48,7 +50,7 @@ export default class SalesPanel extends Component {
         <br />
         <br />
 
-        <Button type="primary" onClick={this.props.submitInterest}>Next</Button>
+        <Button type="primary" onClick={this.props.submitInterests}>Next</Button>
       </div>
     )
   }

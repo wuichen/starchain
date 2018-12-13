@@ -6,6 +6,12 @@ const actions = {
   FETCH_STORES: 'FETCH_STORES',
   SUBMIT_STORE_INTERESTS: 'SUBMIT_STORE_INTERESTS',
   LINK_SOCIAL:'LINK_SOCIAL',
+  SUBMIT_STORE:'SUBMIT_STORE_REQUEST',
+  SUBMIT_STORE_SUCCESS: 'SUBMIT_STORE_SUCCESS',
+  SUBMIT_STORE_ERROR: 'SUBMIT_STORE_ERROR',
+  submitStore: () => ({
+    type: actions.SUBMIT_STORE
+  }),
   linkSocial: (socialData) => ({
     type: actions.LINK_SOCIAL,
     payload: {
@@ -18,7 +24,7 @@ const actions = {
       storeName
     }
   }),
-  submitStoreName: (interests) => ({
+  submitInterests: (interests) => ({
     type: actions.SUBMIT_STORE_INTERESTS,
     payload: {
       interests
