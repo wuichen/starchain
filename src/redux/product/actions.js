@@ -1,0 +1,9 @@
+const actions = {
+  FETCH_PRODUCTS_REQUEST: 'FETCH_PRODUCTS_REQUEST',
+  FETCH_PRODUCTS_SUCCESS: 'FETCH_PRODUCTS_SUCCESS',
+  FETCH_PRODUCTS_ERROR: 'FETCH_PRODUCTS_ERROR',
+  fetchProducts: () => ({
+    type: actions.FETCH_PRODUCTS_REQUEST
+  })
+};
+export default actions;

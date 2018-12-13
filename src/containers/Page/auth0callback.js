@@ -30,7 +30,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import authAction from '../../redux/auth/actions';
 
-const { logout, handleAuthentication, callbackLoading } = authAction
+const { handleAuthentication} = authAction
 
 class Auth0Callback extends Component {
 
@@ -106,7 +106,5 @@ export default connect(
   state => ({
     auth: state.Auth,
   }),{
-  logout,
-  callbackLoading,
   handleAuthentication
 })(Auth0Callback);

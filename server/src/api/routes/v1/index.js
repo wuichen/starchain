@@ -1,6 +1,8 @@
 const express = require('express');
 const userRoutes = require('./user.route');
 const authRoutes = require('./auth.route');
+const productRoutes = require('./product.route');
+
 const ManagementClient = require('auth0').ManagementClient;
 const { auth0_domain, auth0_clientId, auth0_clientSecret } = require('../../../config/vars');
 
@@ -28,11 +30,16 @@ router.get('/idp', (req, res) => {
 	})
 })
 
+
+router.get('/instagram', (req, res) => {
+	res.send('instagram!')
+})
+
 /**
  * GET v1/docs
  */
 router.use('/docs', express.static('docs'));
-
+router.use('/products', productRoutes)
 router.use('/users', userRoutes);
 // router.use('/auth', authRoutes);
 

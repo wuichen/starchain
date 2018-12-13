@@ -155,7 +155,6 @@ class Sidebar extends Component {
           style={styling}
         >
           <Logo collapsed={collapsed} />
-          <StoresButtons collapsed={collapsed} createStore={this.createStore} />
           <Scrollbars style={{ height: height - 70 }}>
             <Menu
               onClick={this.handleClick}
