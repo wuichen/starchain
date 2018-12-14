@@ -5,12 +5,12 @@ const initState = { stores: [], editingStore: {}, loading: false};
 export default function storeReducer(state = initState, action) {
   switch (action.type) {
     case actions.SUBMIT_STORE_NAME:
-      const storeName = action.payload.storeName
+      const store_name = action.payload.store_name
       return { 
         ...state,
         editingStore : {
           ...state.editingStore,
-          storeName: storeName
+          store_name: store_name
         }
       };
     case actions.SUBMIT_INTERESTS:
@@ -22,12 +22,12 @@ export default function storeReducer(state = initState, action) {
         }
       };
     case actions.LINK_SOCIAL:
-      const socialData = action.payload.socialData
+      const social_data = action.payload.social_data
       return { 
         ...state,
         editingStore : {
           ...state.editingStore,
-          socialData: socialData
+          social_data: social_data
         }
       };
     default:

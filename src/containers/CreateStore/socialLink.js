@@ -25,7 +25,7 @@ export default class SocialLink extends Component {
   }
 
   render() {
-
+    console.log(this.props.social_data)
     return (
       <div>
 

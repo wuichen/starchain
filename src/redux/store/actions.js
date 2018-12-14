@@ -12,16 +12,16 @@ const actions = {
   submitStore: () => ({
     type: actions.SUBMIT_STORE_REQUEST
   }),
-  linkSocial: (socialData) => ({
+  linkSocial: (social_data) => ({
     type: actions.LINK_SOCIAL,
     payload: {
-      socialData
+      social_data
     }
   }),
-  submitStoreName: (storeName) => ({
+  submitStoreName: (store_name) => ({
     type: actions.SUBMIT_STORE_NAME,
     payload: {
-      storeName
+      store_name
     }
   }),
   submitInterests: (interests) => ({

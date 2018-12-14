@@ -45,12 +45,12 @@ class CreateStore extends Component {
     message.success('Processing complete!')
   }
 
-  submitStoreName(storeName) {
-    this.props.submitStoreName(storeName)
+  submitStoreName(store_name) {
+    this.props.submitStoreName(store_name)
   }
 
-  linkSocial(socialData) {
-    this.props.linkSocial(socialData)
+  linkSocial(social_data) {
+    this.props.linkSocial(social_data)
   }
 
   submitInterests(interests) {
@@ -73,7 +73,7 @@ class CreateStore extends Component {
           <h3>
             Store name
           </h3>
-          <StoreNameForm storeName={this.props.Store.editingStore.storeName} submitStoreName={this.submitStoreName.bind(this)} next={this.next.bind(this)} prev={this.prev.bind(this)}/>
+          <StoreNameForm store_name={this.props.Store.editingStore.store_name} submitStoreName={this.submitStoreName.bind(this)} next={this.next.bind(this)} prev={this.prev.bind(this)}/>
         </div>
       ),
       description: 'setup the storename for your store'

@@ -13,7 +13,7 @@ class StoreNameForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        this.props.submitStoreName(values.storeName)
+        this.props.submitStoreName(values.store_name)
         this.props.next()
       }
     });
@@ -60,8 +60,8 @@ class StoreNameForm extends React.Component {
             </span>
           )}
         >
-          {getFieldDecorator('storeName', {
-            initialValue: this.props.storeName ? this.props.storeName : '',
+          {getFieldDecorator('store_name', {
+            initialValue: this.props.store_name ? this.props.store_name : '',
             rules: [{ required: true, message: 'Please input your store name!', whitespace: true }],
           })(
             <Input/>
