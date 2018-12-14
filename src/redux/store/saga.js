@@ -10,6 +10,7 @@ export function* submitStoreRequest() {
       const store = yield call(api.post, '/stores', {
       	
       })
+      console.log(store)
       yield put({
         type: actions.SUBMIT_STORE_SUCCESS
       })

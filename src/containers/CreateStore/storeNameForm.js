@@ -58,6 +58,9 @@ class StoreNameForm extends React.Component {
             <Input />
           )}
         </FormItem>
+
+        <Button onClick={this.props.prev}>Previous</Button>
+
         <FormItem >
           <Button type="primary" htmlType="submit" className="login-form-button">
             Next

@@ -1,5 +1,6 @@
 const express = require('express');
 const userRoutes = require('./user.route');
+const storeRoutes = require('./store.route');
 const authRoutes = require('./auth.route');
 const productRoutes = require('./product.route');
 
@@ -40,6 +41,8 @@ router.get('/instagram', (req, res) => {
  */
 router.use('/docs', express.static('docs'));
 router.use('/products', productRoutes)
+router.use('/stores', storeRoutes)
+
 router.use('/users', userRoutes);
 // router.use('/auth', authRoutes);
 

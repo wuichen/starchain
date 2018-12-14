@@ -49,6 +49,8 @@ export default class SalesPanel extends Component {
         </Select>
         <br />
         <br />
+        
+        <Button onClick={this.props.prev}>Previous</Button>
 
         <Button type="primary" onClick={this.props.submitInterests}>Next</Button>
       </div>

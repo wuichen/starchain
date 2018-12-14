@@ -75,18 +75,19 @@ class CreateStore extends Component {
           <h3>
             Store name
           </h3>
-          <StoreNameForm submitStoreName={this.submitStoreName.bind(this)}/>
+          <StoreNameForm submitStoreName={this.submitStoreName.bind(this)} prev={this.prev.bind(this)}/>
         </div>
       ),
       description: 'setup the storename for your store'
     }, {
       title: 'Products & Categories',
-      content: <SalesPanel submitInterests={this.submitInterests.bind(this)} />,
+      content: <SalesPanel submitInterests={this.submitInterests.bind(this)} prev={this.prev.bind(this)}/>,
       description: 'pick the categories and products for your store'
     }, {
       title: 'Done',
       content: (
         <div>
+          <Button onClick={this.prev.bind(this)}>Previous</Button>
           <Button onClick={this.props.submitStore}>Submit</Button>
         </div>
       ),
