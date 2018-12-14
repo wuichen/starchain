@@ -6,14 +6,22 @@ import { connect } from 'react-redux';
 const FormItem = Form.Item;
 
 class StoreNameForm extends React.Component {
+  constructor(props) {
+    super(props);
+  }
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
         this.props.submitStoreName(values.storeName)
+        this.props.next()
       }
     });
   }
+
+  // storeNameOnChange(e) {
+  //   this.props.submitStoreName(e.target.value)
+  // }
 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -53,9 +61,10 @@ class StoreNameForm extends React.Component {
           )}
         >
           {getFieldDecorator('storeName', {
+            initialValue: this.props.storeName ? this.props.storeName : '',
             rules: [{ required: true, message: 'Please input your store name!', whitespace: true }],
           })(
-            <Input />
+            <Input/>
           )}
         </FormItem>
 

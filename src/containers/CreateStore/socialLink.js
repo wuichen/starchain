@@ -11,9 +11,6 @@ export default class SocialLink extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      ig_user: null
-    };
   }
 
   async responseInstagram(response) {
@@ -21,18 +18,11 @@ export default class SocialLink extends Component {
       const ig_response = await fetch('https://api.instagram.com/v1/users/self/?access_token=' + response, {mode: 'cors'})
       const ig_user = await ig_response.json()
       console.log(ig_user)
-      this.setState({
-        ig_user: ig_user.data
-      })
+      this.props.linkSocial(ig_user.data)
     } catch (err) {
       console.log(err)
     }
   }
-
-  linkSocial() {
-    this.props.linkSocial(this.state.ig_user)
-  }
-
 
   render() {
 
@@ -43,10 +33,10 @@ export default class SocialLink extends Component {
           Social Link
         </h3>
         <div>
-          { this.state.ig_user ?
+          { this.props.social_data ?
             ( <div>
-                <Avatar src={this.state.ig_user.profile_picture} /> &nbsp;
-                <span>{this.state.ig_user.username}</span>
+                <Avatar src={this.props.social_data.profile_picture} /> &nbsp;
+                <span>{this.props.social_data.username}</span>
               </div>
             ) : (
               <div>
@@ -65,7 +55,7 @@ export default class SocialLink extends Component {
         </div>
         <br />
         <div>
-          <Button type="primary" onClick={this.linkSocial.bind(this)} className="login-form-button">
+          <Button type="primary" onClick={this.props.next} className="login-form-button">
             Next
           </Button>
         </div>

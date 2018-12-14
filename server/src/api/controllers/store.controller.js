@@ -9,6 +9,7 @@ const { handler: errorHandler } = require('../middlewares/error');
  */
 exports.create = async (req, res, next) => {
   try {
+    console.log(req.body)
     // const store = new Store(req.body);
     // const savedStore = await store.save();
     // res.status(httpStatus.CREATED);

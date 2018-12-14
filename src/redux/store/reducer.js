@@ -10,7 +10,7 @@ export default function storeReducer(state = initState, action) {
         ...state,
         editingStore : {
           ...state.editingStore,
-          store_name: storeName
+          storeName: storeName
         }
       };
     case actions.SUBMIT_INTERESTS:
@@ -27,7 +27,7 @@ export default function storeReducer(state = initState, action) {
         ...state,
         editingStore : {
           ...state.editingStore,
-          social_data: socialData
+          socialData: socialData
         }
       };
     default:

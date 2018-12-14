@@ -30,11 +30,8 @@ const actions = {
       interests
     }
   }),
-  createStore: (store) => ({
-    type: actions.CREATE_STORE_REQUEST,
-    payload: {
-      store
-    }
+  createStore: () => ({
+    type: actions.CREATE_STORE_REQUEST
   })
 };
 export default actions;

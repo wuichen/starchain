@@ -78,9 +78,9 @@ export function* loginSuccess() {
       console.log(user)
       if (user) {
         if (user.email_verified) {
-          if (user.stores && user.stores[0]) {
-            yield put(push('/dashboard'))
-          } else {
+          if (!user.stores || !user.stores[0]) {
+          //   yield put(push('/dashboard'))
+          // } else {
             yield put(push('/dashboard/createStore'))
           }
         } else {
