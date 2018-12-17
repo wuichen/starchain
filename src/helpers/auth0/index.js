@@ -10,7 +10,7 @@ class Auth0Helper {
     clientID: AUTH_CONFIG.clientId,
     audience: 'http://localhost:3000/v1/api',
     redirectUri: AUTH_CONFIG.callbackUrl,
-    scope: 'openid profile read:current_user',
+    scope: 'openid profile read:current_user read:messages',
     responseType: 'token id_token',
     // auto_login: false
   });

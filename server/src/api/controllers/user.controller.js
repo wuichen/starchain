@@ -3,7 +3,7 @@ const { omit } = require('lodash');
 const User = require('../models/user.model');
 const { handler: errorHandler } = require('../middlewares/error');
 const ManagementClient = require('auth0').ManagementClient;
-const { auth0_domain, auth0_clientId, auth0_clientSecret } = require('../../config/vars');
+const { auth0_domain, auth0_management_api_clientId, auth0_management_api_clientSecret } = require('../../config/vars');
 
 /**
  * Load user and append to req.
@@ -13,8 +13,8 @@ exports.load = async (req, res, next, id) => {
   try {
     const auth0 = new ManagementClient({
       domain: auth0_domain,
-      clientId: auth0_clientId,
-      clientSecret: auth0_clientSecret,
+      clientId: auth0_management_api_clientId,
+      clientSecret: auth0_management_api_clientSecret,
       scope: 'read:users read:user_idp_tokens'
     });
 

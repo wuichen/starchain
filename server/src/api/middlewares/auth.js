@@ -6,6 +6,7 @@ const jwt = require('express-jwt');
 const ADMIN = 'admin';
 const LOGGED_USER = '_loggedUser';
 const jwksRsa = require('jwks-rsa');
+const jwtAuthz = require('express-jwt-authz');
 const {auth0_clientSecret} = require('../../config/vars')
 
 const handleJWT = (req, res, next, roles) => async (err, user, info) => {
@@ -55,6 +56,7 @@ exports.authorize = (roles = User.roles) => (req, res, next) =>
 exports.oAuth = service =>
   passport.authenticate(service, { session: false });
 
+const checkScopes = jwtAuthz([ 'read:messages' ]);
 
 const checkJwt = jwt({
   // Dynamically provide a signing key based on the kid in the header and the singing keys provided by the JWKS endpoint.
@@ -70,6 +72,8 @@ const checkJwt = jwt({
   issuer: 'https://starchain.auth0.com/',
   algorithms: ['RS256']
 });
+
+exports.checkScopes = checkScopes
 
 exports.checkJwt = checkJwt
 

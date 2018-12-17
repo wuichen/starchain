@@ -106,7 +106,7 @@ export function* loginError() {
     clearToken();
     // Auth0.signout()
     // yield put(push('/'));
-    yield call([Auth0, 'signout'])
+    yield call([Auth0, 'logout'])
   });
 }
 

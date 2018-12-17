@@ -25,6 +25,10 @@ const storeSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.Mixed,
       required: true
     }
+  },
+  user: {
+    type: String,
+    required: true
   }
 }, {
   timestamps: true,

@@ -15,8 +15,8 @@ module.exports = {
   },
   logs: process.env.NODE_ENV === 'production' ? 'combined' : 'dev',
   auth0_domain: process.env.AUTH0_DOMAIN,
-  auth0_clientId: process.env.AUTH0_CLIENT_ID,
-  auth0_clientSecret: process.env.AUTH0_CLIENT_SECRET,
+  auth0_management_api_clientId: process.env.AUTH0_MANAGEMENT_CLIENT_ID,
+  auth0_management_api_clientSecret: process.env.AUTH0_MANAGEMENT_CLIENT_SECRET,
   shopify_store_domain: process.env.SHOPIFY_STORE_DOMAIN,
   shopify_store_accessToken: process.env.SHOPIF_STORE_ACCESSTOKEN
 };
