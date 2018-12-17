@@ -63,7 +63,7 @@ class CreateStore extends Component {
     const steps = [{
       title: 'Social Link',
       content: (
-        <SocialLink next={this.next.bind(this)} social_data={this.props.Store.editingStore.social_data} linkSocial={this.linkSocial.bind(this)} />
+        <SocialLink next={this.next.bind(this)} social_data={this.props.Store.editing_store.social_data} linkSocial={this.linkSocial.bind(this)} />
       ),
       description: "the store's associated social media account"
     }, {
@@ -73,7 +73,7 @@ class CreateStore extends Component {
           <h3>
             Store name
           </h3>
-          <StoreNameForm store_name={this.props.Store.editingStore.store_name} submitStoreName={this.submitStoreName.bind(this)} next={this.next.bind(this)} prev={this.prev.bind(this)}/>
+          <StoreNameForm store_name={this.props.Store.editing_store.store_name} submitStoreName={this.submitStoreName.bind(this)} next={this.next.bind(this)} prev={this.prev.bind(this)}/>
         </div>
       ),
       description: 'setup the storename for your store'

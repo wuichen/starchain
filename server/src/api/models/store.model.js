@@ -20,7 +20,7 @@ const storeSchema = new mongoose.Schema({
   products: {
     type: Array
   },
-  social: {
+  social_data: {
     ig: {
       type: mongoose.Schema.Types.Mixed,
       required: true

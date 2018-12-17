@@ -21,7 +21,7 @@ const AUTH_CONFIG = {
   clientId: process.env.REACT_APP_AUTH0_CLIENT_ID,
   callbackUrl: process.env.REACT_APP_AUTH0_CALLBACK_URL,
   responseType: process.env.REACT_APP_AUTH0_RESPONSE_TYPE,
-  scope: process.env.REACT_APP_AUTH0_SCOPE
+  scope: process.env.REACT_APP_AUTH0_SCOPE,
 };
 
 const jwtConfig = {

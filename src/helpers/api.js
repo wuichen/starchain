@@ -5,8 +5,13 @@ let api = axios.create({
   baseURL: jwtConfig.fetchUrl,
 })
 
-api.defaults.headers.common['Authorization'] = localStorage.getItem('access_token');
+api.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('access_token');
 api.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+
+function setToken() {
+	const access_token = localStorage.getItem('access_token')
+	api.defaults.headers.common['Authorization'] = 'Bearer ' + access_token;
+}
 
 // const customHeader = () => ({
 //   'Content-Type': 'application/json',
@@ -29,4 +34,7 @@ api.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 // ['get', 'post', 'put', 'delete'].forEach(method => {
 //   SuperFetch[method] = base.bind(null, method);
 // });
-export default api;
+export {
+	api,
+	setToken
+};

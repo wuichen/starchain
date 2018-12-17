@@ -1,7 +1,7 @@
 const express = require('express');
 const validate = require('express-validation');
 const controller = require('../../controllers/store.controller');
-const { authorize, ADMIN, LOGGED_USER } = require('../../middlewares/auth');
+const { authorize, ADMIN, LOGGED_USER, checkJwt } = require('../../middlewares/auth');
 // const {
 // } = require('../../validations/store.validation');
 
@@ -62,7 +62,7 @@ router
    * @apiError (Unauthorized 401)  Unauthorized     Only authenticated users can create the data
    * @apiError (Forbidden 403)     Forbidden        Only admins can create the data
    */
-  .post(controller.create);
+  .post(checkJwt, controller.create);
   // .post(authorize(ADMIN), validate(createUser), controller.create);
 
 

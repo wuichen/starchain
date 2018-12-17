@@ -1,15 +1,15 @@
 import { push } from 'react-router-redux';
 import actions from './actions';
 import { all, takeEvery, put, call, fork, select, take } from 'redux-saga/effects';
-import api from '../../helpers/api';
+import {api} from '../../helpers/api';
 
 
 export function* submitStoreRequest() {
   yield takeEvery(actions.SUBMIT_STORE_REQUEST, function*() {
     try {
-      const editingStore = yield select(state => state.Store.editingStore)
+      const editing_store = yield select(state => state.Store.editing_store)
 
-      const store = yield call(api.post, '/stores', editingStore)
+      const store = yield call(api.post, '/stores', editing_store)
 
       yield put({
         type: actions.SUBMIT_STORE_SUCCESS

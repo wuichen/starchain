@@ -2,11 +2,12 @@ import { all, takeEvery, put, call, fork, select, take } from 'redux-saga/effect
 import { push } from 'react-router-redux';
 import actions from './actions';
 import userActions from '../user/actions';
-import { setToken, clearToken, getToken, getAccessToken } from '../../helpers/utility';
+import { clearToken, getToken, getAccessToken } from '../../helpers/utility';
 import AuthHelper from '../../helpers/authHelper';
 import Auth0 from "../../helpers/auth0";
 import notification from '../../components/notification';
 import axios from 'axios';
+import {setToken} from '../../helpers/api';
 
 // export function* loginRequest() {
 //   yield takeEvery('LOGIN_REQUEST', function*({ payload }) {
@@ -72,6 +73,7 @@ export function promiseTest() {
 export function* loginSuccess() {
   yield takeEvery(actions.LOGIN_SUCCESS, function*({ payload, history }) {
     try {
+      setToken()
       yield put(userActions.getUser())
       yield take(userActions.GET_USER_SUCCESS)
       const user = yield select(state => state.User.user)
@@ -102,8 +104,8 @@ export function* loginSuccess() {
 export function* loginError() {
   yield takeEvery(actions.LOGIN_ERROR, function*() {
     clearToken();
-    Auth0.signout()
-    yield put(push('/'));
+    // Auth0.signout()
+    // yield put(push('/'));
     yield call([Auth0, 'signout'])
   });
 }
@@ -112,7 +114,6 @@ export function* logout() {
   yield takeEvery(actions.LOGOUT, function*() {
     clearToken();
     yield call([Auth0, 'logout'])
-    yield put(push('/'));
   });
 }
 export function* checkAuthorization() {

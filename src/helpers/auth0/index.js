@@ -8,8 +8,7 @@ class Auth0Helper {
   auth0 = new auth0.WebAuth({
     domain: AUTH_CONFIG.domain,
     clientID: AUTH_CONFIG.clientId,
-    // audience: `https://${params.domain}/userinfo`,
-    // audience: params.apiAudience,
+    audience: 'http://localhost:3000/v1/api',
     redirectUri: AUTH_CONFIG.callbackUrl,
     scope: 'openid profile read:current_user',
     responseType: 'token id_token',

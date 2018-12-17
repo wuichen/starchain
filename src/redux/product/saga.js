@@ -1,7 +1,7 @@
 import { all, takeEvery, put, call, fork, select, take } from 'redux-saga/effects';
 import { push } from 'react-router-redux';
 import actions from './actions';
-import api from '../../helpers/api';
+import {api} from '../../helpers/api';
 
 export function* fetchProductsRequest() {
   yield takeEvery(actions.FETCH_PRODUCTS_REQUEST, function*() {

@@ -1,6 +1,6 @@
 import actions from './actions';
 
-const initState = { stores: [], editingStore: {}, loading: false};
+const initState = { stores: [], editing_store: {}, loading: false};
 
 export default function storeReducer(state = initState, action) {
   switch (action.type) {
@@ -8,16 +8,16 @@ export default function storeReducer(state = initState, action) {
       const store_name = action.payload.store_name
       return { 
         ...state,
-        editingStore : {
-          ...state.editingStore,
+        editing_store : {
+          ...state.editing_store,
           store_name: store_name
         }
       };
     case actions.SUBMIT_INTERESTS:
       return { 
         ...state,
-        editingStore : {
-          ...state.editingStore,
+        editing_store : {
+          ...state.editing_store,
           interests: action.payload.interests
         }
       };
@@ -25,8 +25,8 @@ export default function storeReducer(state = initState, action) {
       const social_data = action.payload.social_data
       return { 
         ...state,
-        editingStore : {
-          ...state.editingStore,
+        editing_store : {
+          ...state.editing_store,
           social_data: social_data
         }
       };

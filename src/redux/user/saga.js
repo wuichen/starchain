@@ -5,7 +5,7 @@ import { setToken, clearToken, getToken } from '../../helpers/utility';
 import AuthHelper from '../../helpers/authHelper';
 import notification from '../../components/notification';
 import Auth0 from "../../helpers/auth0";
-import api from '../../helpers/api';
+import {api} from '../../helpers/api';
 
 export function* getUserRequest() {
   yield takeEvery(actions.GET_USER_REQUEST, function*() {
