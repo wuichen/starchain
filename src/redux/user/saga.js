@@ -6,6 +6,7 @@ import AuthHelper from '../../helpers/authHelper';
 import notification from '../../components/notification';
 import Auth0 from "../../helpers/auth0";
 import {api} from '../../helpers/api';
+import authActions from '../auth/actions';
 
 export function* getUserRequest() {
   yield takeEvery(actions.GET_USER_REQUEST, function*() {
@@ -34,7 +35,9 @@ export function* getUserSuccess() {
 }
 
 export function* getUserError() {
-  yield takeEvery(actions.GET_USER_ERROR, function*() {});
+  yield takeEvery(actions.GET_USER_ERROR, function*() {
+    yield put(authActions.logout())
+  });
 }
 
 export function* updateUserRequest() {

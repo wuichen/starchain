@@ -14,7 +14,7 @@ exports.create = async (req, res, next) => {
   let session = null
   try {
     const body = req.body
-    console.log(body)
+
     const auth0User_resp = await axios('https://starchain.auth0.com/userinfo', {
       headers: {
         Authorization: req.headers.authorization
@@ -22,6 +22,7 @@ exports.create = async (req, res, next) => {
     })
     const auth0User = auth0User_resp.data
     const products = await shopify.product.list()
+    const productIds = products.map(product => product.id)
 
     session = await mongoose.startSession()
     session.startTransaction()

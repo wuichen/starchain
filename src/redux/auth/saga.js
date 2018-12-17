@@ -71,19 +71,22 @@ export function promiseTest() {
 }
 
 export function* loginSuccess() {
-  yield takeEvery(actions.LOGIN_SUCCESS, function*({ payload, history }) {
+  yield takeEvery(actions.LOGIN_SUCCESS, function*() {
     try {
       setToken()
       yield put(userActions.getUser())
-      yield take(userActions.GET_USER_SUCCESS)
+      yield take.maybe(userActions.GET_USER_SUCCESS)
       const user = yield select(state => state.User.user)
-      console.log(user)
       if (user) {
         if (user.email_verified) {
           if (!user.stores || !user.stores[0]) {
           //   yield put(push('/dashboard'))
           // } else {
             yield put(push('/dashboard/createStore'))
+          } else {
+            if (window.location.pathname == '/callback') {
+              yield put(push('/dashboard'))
+            }
           }
         } else {
           // yield call([Auth0, 'logout'])
@@ -103,10 +106,7 @@ export function* loginSuccess() {
 
 export function* loginError() {
   yield takeEvery(actions.LOGIN_ERROR, function*() {
-    clearToken();
-    // Auth0.signout()
-    // yield put(push('/'));
-    yield call([Auth0, 'logout'])
+    yield put(actions.logout())
   });
 }
 

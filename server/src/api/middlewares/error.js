@@ -19,8 +19,13 @@ const handler = (err, req, res, next) => {
     delete response.stack;
   }
 
-  res.status(err.status);
-  res.json(response);
+  if (!err.status) {
+    res.status(httpStatus.INTERNAL_SERVER_ERROR)
+    res.json(response)
+  } else {
+    res.status(err.status);
+    res.json(response);
+  }
 };
 exports.handler = handler;
 
