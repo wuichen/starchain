@@ -17,7 +17,7 @@ export default class SocialLink extends Component {
     try {
       const ig_response = await fetch('https://api.instagram.com/v1/users/self/?access_token=' + response, {mode: 'cors'})
       const ig_user = await ig_response.json()
-      console.log(ig_user)
+      ig_user.data.access_token = response
       this.props.linkSocial(ig_user.data)
     } catch (err) {
       console.log(err)

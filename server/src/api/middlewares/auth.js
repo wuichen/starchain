@@ -73,6 +73,16 @@ const checkJwt = jwt({
   algorithms: ['RS256']
 });
 
+const passUser = async (req, res, next) => {
+  const auth0User_resp = await axios('https://starchain.auth0.com/userinfo', {
+    headers: {
+      Authorization: req.headers.authorization
+    }
+  })
+  const auth0User = auth0User_resp.data
+  req.user = user;
+}
+
 exports.checkScopes = checkScopes
 
 exports.checkJwt = checkJwt

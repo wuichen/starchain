@@ -7,6 +7,8 @@ const jwt = require('jwt-simple');
 const uuidv4 = require('uuid/v4');
 const APIError = require('../utils/APIError');
 const { env, jwtSecret, jwtExpirationInterval } = require('../../config/vars');
+const ManagementClient = require('auth0').ManagementClient;
+const { auth0_domain, auth0_management_api_clientId, auth0_management_api_clientSecret } = require('../../config/vars');
 
 /**
 * User Roles
@@ -110,11 +112,31 @@ userSchema.statics = {
   //  */
   async get(id) {
     try {
-      let user;
 
       // if (mongoose.Types.ObjectId.isValid(id)) {
-      user = await this.findById(id).exec();
+      // user = await this.findById(id).exec();
       // }
+
+      const auth0 = new ManagementClient({
+        domain: auth0_domain,
+        clientId: auth0_management_api_clientId,
+        clientSecret: auth0_management_api_clientSecret,
+        scope: 'read:users read:user_idp_tokens'
+      });
+
+      const auth0_user = await auth0.getUser({id})
+      let db_user = null
+      if (auth0_user.email_verified) {
+        db_user = await this.findById(id).exec();
+        if (!db_user) {
+          db_user = await this.create({
+            _id: auth0_user.user_id,
+            email: auth0_user.email
+          })
+        }
+        db_user = db_user.toObject()
+      }
+      const user = Object.assign({}, auth0_user, db_user)
       if (user) {
         return user;
       }

@@ -20,6 +20,9 @@ const storeSchema = new mongoose.Schema({
   products: {
     type: Array
   },
+  cover_photo: {
+    type: Object
+  },
   social_data: {
     ig: {
       type: mongoose.Schema.Types.Mixed,

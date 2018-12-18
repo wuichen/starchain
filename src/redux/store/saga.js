@@ -26,6 +26,7 @@ export function* submitStoreRequest() {
 
 export function* submitStoreSuccess() {
   yield takeEvery(actions.SUBMIT_STORE_SUCCESS, function*({payload, history}) {
+    yield put(push('/dashboard'))
   });
 }
 

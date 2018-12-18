@@ -24,13 +24,20 @@ exports.create = async (req, res, next) => {
     const products = await shopify.product.list()
     const productIds = products.map(product => product.id)
 
+    // TODO: need a better mechanism to select if photos
+    const igToken = body.social_data.access_token
+    console.log(igToken)
+
+    const igMediaResp = await axios('https://api.instagram.com/v1/users/self/media/recent/?access_token=' + igToken, {mode: 'cors'})
+    const igMedia = igMediaResp.data.data
     session = await mongoose.startSession()
     session.startTransaction()
 
     const store = new Store({
       store_name: body.store_name,
-      products,
+      products: productIds,
       interests: body.interests,
+      cover_photo: igMedia[0],
       social_data: {
         ig: body.social_data
       },
@@ -48,7 +55,9 @@ exports.create = async (req, res, next) => {
     res.json(savedStore.toObject());
 
   } catch (error) {
-    session.abortTransaction()
+    if (session) {
+      session.abortTransaction()
+    }
     next(Store.checkDuplicateStoreName(error));
   }
 };
