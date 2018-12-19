@@ -14,13 +14,6 @@ exports.create = async (req, res, next) => {
   let session = null
   try {
     const body = req.body
-
-    const auth0User_resp = await axios('https://starchain.auth0.com/userinfo', {
-      headers: {
-        Authorization: req.headers.authorization
-      }
-    })
-    const auth0User = auth0User_resp.data
     const products = await shopify.product.list()
     const productIds = products.map(product => product.id)
 
@@ -32,8 +25,7 @@ exports.create = async (req, res, next) => {
     const igMedia = igMediaResp.data.data
     session = await mongoose.startSession()
     session.startTransaction()
-
-    const store = new Store({
+    const store = {
       store_name: body.store_name,
       products: productIds,
       interests: body.interests,
@@ -41,18 +33,30 @@ exports.create = async (req, res, next) => {
       social_data: {
         ig: body.social_data
       },
-      user: auth0User.sub
-    });
-    const savedStore = await store.save();
+      user: req.user.sub
+    }
+    const savedStore = await Store.create([store], { session: session });
 
-    const user = await User.findByIdAndUpdate(auth0User.sub, {
+    // const store = new Store({
+    //   store_name: body.store_name,
+    //   products: productIds,
+    //   interests: body.interests,
+    //   cover_photo: igMedia[0],
+    //   social_data: {
+    //     ig: body.social_data
+    //   },
+    //   user: req.user.sub
+    // });
+    // const savedStore = await store.save();
+
+    const user = await User.findByIdAndUpdate(req.user.sub, {
       $push: { stores: body.store_name }
-    })
+    }, { session: session })
 
     await session.commitTransaction()
 
     res.status(httpStatus.CREATED);
-    res.json(savedStore.toObject());
+    res.json(store);
 
   } catch (error) {
     if (session) {

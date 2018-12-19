@@ -13,10 +13,10 @@ import StoreNameForm from './storeNameForm';
 import SalesPanel from './salesPanel';
 
 import SocialLink from './socialLink';
-import storeAction from '../../redux/store/actions';
-import productAction from '../../redux/product/actions';
-const {fetchProducts} = productAction
-const {submitStoreName, submitStore, linkSocial, submitInterests} = storeAction
+import storesAction from '../../redux/stores/actions';
+import productsAction from '../../redux/products/actions';
+const {fetchProducts} = productsAction
+const {submitStoreName, submitStore, linkSocial, submitInterests} = storesAction
 const Step = Steps.Step;
 
 class CreateStore extends Component {
@@ -63,7 +63,7 @@ class CreateStore extends Component {
     const steps = [{
       title: 'Social Link',
       content: (
-        <SocialLink next={this.next.bind(this)} social_data={this.props.Store.editing_store.social_data} linkSocial={this.linkSocial.bind(this)} />
+        <SocialLink next={this.next.bind(this)} social_data={this.props.Stores.editing_store.social_data} linkSocial={this.linkSocial.bind(this)} />
       ),
       description: "the store's associated social media account"
     }, {
@@ -73,7 +73,7 @@ class CreateStore extends Component {
           <h3>
             Store name
           </h3>
-          <StoreNameForm store_name={this.props.Store.editing_store.store_name} submitStoreName={this.submitStoreName.bind(this)} next={this.next.bind(this)} prev={this.prev.bind(this)}/>
+          <StoreNameForm store_name={this.props.Stores.editing_store.store_name} submitStoreName={this.submitStoreName.bind(this)} next={this.next.bind(this)} prev={this.prev.bind(this)}/>
         </div>
       ),
       description: 'setup the storename for your store'
@@ -146,7 +146,7 @@ class CreateStore extends Component {
 
 export default connect(
   state => ({
-    Store: state.Store,
+    Stores: state.Stores,
   }),
   { submitStoreName,
     linkSocial,

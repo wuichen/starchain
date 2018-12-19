@@ -75,7 +75,7 @@ export function* loginSuccess() {
     try {
       setToken()
       yield put(userActions.getUser())
-      yield take.maybe(userActions.GET_USER_SUCCESS)
+      yield take(userActions.GET_USER_SUCCESS)
       const user = yield select(state => state.User.user)
       if (user) {
         if (user.email_verified) {

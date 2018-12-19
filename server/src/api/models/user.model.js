@@ -128,6 +128,8 @@ userSchema.statics = {
       let db_user = null
       if (auth0_user.email_verified) {
         db_user = await this.findById(id).exec();
+        console.log(db_user)
+
         if (!db_user) {
           db_user = await this.create({
             _id: auth0_user.user_id,

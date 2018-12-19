@@ -6,6 +6,10 @@ import {api} from '../../helpers/api';
 export function* fetchProductsRequest() {
   yield takeEvery(actions.FETCH_PRODUCTS_REQUEST, function*() {
     try {
+      const user = yield select(state => state.User.user)
+      // if (!user) {
+      //   yield take()
+      // } 
       const products = yield call(api.get, '/products')
       yield put({
         type: actions.FETCH_PRODUCTS_SUCCESS,

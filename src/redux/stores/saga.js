@@ -7,7 +7,7 @@ import {api} from '../../helpers/api';
 export function* submitStoreRequest() {
   yield takeEvery(actions.SUBMIT_STORE_REQUEST, function*() {
     try {
-      const editing_store = yield select(state => state.Store.editing_store)
+      const editing_store = yield select(state => state.Stores.editing_store)
 
       const store = yield call(api.post, '/stores', editing_store)
 

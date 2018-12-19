@@ -1,4 +1,5 @@
 import { all, takeEvery, put, call, fork } from 'redux-saga/effects';
+import {END} from 'redux-saga'
 import { push } from 'react-router-redux';
 import actions from './actions';
 import { setToken, clearToken, getToken } from '../../helpers/utility';
@@ -36,6 +37,7 @@ export function* getUserSuccess() {
 
 export function* getUserError() {
   yield takeEvery(actions.GET_USER_ERROR, function*() {
+    // yield put(END)
     yield put(authActions.logout())
   });
 }

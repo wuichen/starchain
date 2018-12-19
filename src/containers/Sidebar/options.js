@@ -9,6 +9,11 @@ const options = [
     label: 'sidebar.authCheck',
     leftIcon: 'ion-document',
   },
+  {
+    key: 'products',
+    label: 'sidebar.products',
+    leftIcon: 'ion-tshirt',
+  },
 ];
 
 

@@ -19,6 +19,10 @@ const routes = [
     path: 'createStore',
     component: asyncComponent(() => import('../CreateStore')),
   },
+  {
+    path: 'products',
+    component: asyncComponent(() => import('../Products')),
+  },
 ];
 
 class AppRouter extends Component {

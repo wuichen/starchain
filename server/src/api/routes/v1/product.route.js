@@ -1,7 +1,7 @@
 const express = require('express');
 const validate = require('express-validation');
-const controller = require('../../controllers/product.controller');
-// const { authorize, ADMIN, LOGGED_USER } = require('../../middlewares/auth');
+const controller = require('../../controllers/products.controller');
+const { passUser } = require('../../middlewares/auth');
 // const {
 //   listUsers,
 //   createUser,
@@ -40,7 +40,7 @@ router
    * @apiError (Unauthorized 401)  Unauthorized  Only authenticated users can access the data
    * @apiError (Forbidden 403)     Forbidden     Only admins can access the data
    */
-  .get(controller.list)
+  .get(passUser, controller.list)
 
   // .get(authorize(ADMIN), validate(listUsers), controller.list)
   /**
