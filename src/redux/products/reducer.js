@@ -1,6 +1,6 @@
 import actions from './actions';
 
-const initState = { products: [], loading: false};
+const initState = { products: [], loading: false, store_products: [], new_products: [], buying: []};
 
 export default function productReducer(state = initState, action) {
   switch (action.type) {

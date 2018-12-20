@@ -42,7 +42,7 @@ const userSchema = new mongoose.Schema({
   //   enum: roles,
   //   default: 'user',
   // },
-  stores: [String]
+  store_names: [String]
 }, {
   timestamps: true,
 });

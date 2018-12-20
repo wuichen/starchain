@@ -79,7 +79,7 @@ export function* loginSuccess() {
       const user = yield select(state => state.User.user)
       if (user) {
         if (user.email_verified) {
-          if (!user.stores || !user.stores[0]) {
+          if (!user.store_names || !user.store_names[0]) {
           //   yield put(push('/dashboard'))
           // } else {
             yield put(push('/dashboard/createStore'))

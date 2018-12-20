@@ -37,7 +37,7 @@ export function* getUserSuccess() {
 
 export function* getUserError() {
   yield takeEvery(actions.GET_USER_ERROR, function*() {
-    // yield put(END)
+    yield put(END)
     yield put(authActions.logout())
   });
 }

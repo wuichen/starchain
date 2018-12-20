@@ -14,7 +14,9 @@ exports.create = async (req, res, next) => {
   let session = null
   try {
     const body = req.body
-    const products = await shopify.product.list()
+    const products = await shopify.product.list({
+      ids: '1972728266821, 1972677247045, 1927848558661'
+    })
     const productIds = products.map(product => product.id)
 
     // TODO: need a better mechanism to select if photos
@@ -50,7 +52,7 @@ exports.create = async (req, res, next) => {
     // const savedStore = await store.save();
 
     const user = await User.findByIdAndUpdate(req.user.sub, {
-      $push: { stores: body.store_name }
+      $push: { store_names: body.store_name }
     }, { session: session })
 
     await session.commitTransaction()
